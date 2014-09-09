@@ -9,6 +9,12 @@ class HangmenController < ApplicationController
     @hangman = current_user.hangmen.find params[:id]
   end
 
+  def challenge
+    @users = User.all
+    @challenges = current_user.hangmen_challenges.all
+    @challenge = current_user.challenges.new
+  end
+
   def create
     hangman = current_user.hangmen.create! answer: Hangman::WORD_LIST.sample
     redirect_to hangman

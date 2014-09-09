@@ -1,0 +1,45 @@
+= form_for(@challenge, class: "form") do |c|
+
+  =c.hidden_field :challenged_user
+  .form-group
+    .btn-group.btn-group-xs
+      - @users.each do |u|
+        %button.btn.btn-default= "#{u.email}"
+  .form-group
+    = label_tag :answer
+    = text_field_tag :answer
+
+  =c.submit
+
+%br
+%br
+%br
+%br
+%br
+
+
+
+%table.table.table-striped
+  %thead
+    %tr
+      %t
+      %th Board
+      %th Misses
+  %tbody
+    - @challenges.each do |game|
+      %tr
+        %td
+          - if game.finished?
+            = link_to 'View', game, class: 'btn btn-default'
+          - else
+            = link_to 'Play', game, class: 'btn btn-primary'
+          %td= game.board
+          %td
+            = "#{game.misses}/#{game.max_misses}"
+            -if game.won?
+              %span.label.label-success Won
+            -elsif game.lost?
+              %span.label.label-danger Lost
+    %tr
+      %td{ colspan: 3 }
+        = link_to 'New Game', hangmen_path, method: :post, class: 'btn btn-success'

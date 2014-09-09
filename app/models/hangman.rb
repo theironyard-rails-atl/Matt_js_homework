@@ -17,6 +17,7 @@ class Hangman < ActiveRecord::Base
   )
 
   belongs_to :user
+  has_one :challenge
 
   validates_presence_of :user, :answer, :max_misses, :misses
 
